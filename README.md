@@ -23,3 +23,10 @@ Every NUL byte is treated as a separator, so consecutive NULs produce empty reco
 For `Buffer` input, `splitBuffer` returns subarray slices that share memory with the input buffer—no copy is made. If you need stable, independent buffers, call `Buffer.from()` on each result.
 
 The `split` function dispatches on input type: strings yield strings, Buffers yield Buffers. Anything else throws `TypeError`.
+
+## Performance
+
+The window keeps a bounded buffer, so `push` is constant time and memory does not
+grow with the length of the stream. `peak` and `trough` are linear in the window
+size, which is the trade that keeps `push` cheap.
+
